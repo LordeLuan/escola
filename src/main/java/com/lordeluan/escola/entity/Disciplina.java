@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -31,9 +32,11 @@ public class Disciplina {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	private String nome;
 	private Integer semestre;
+	
+	@ManyToOne
+	private Professor professor;
 
 	@ManyToMany
 	@JoinTable(name = "disciplinas_alunos", 
@@ -49,7 +52,10 @@ public class Disciplina {
 		id = objDto.getId();
 		nome = objDto.getNome();
 		semestre = objDto.getSemestre();
-//		alunos = objDto.getAlunos();
+		alunos = objDto.getAlunos();
+		professor = new Professor(objDto.getProfessorDTO());
 	}
+	
+	
 
 }

@@ -6,11 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.lordeluan.escola.dto.AlunoDTO;
+import com.lordeluan.escola.dto.ProfessorDTO;
 import com.lordeluan.escola.entity.enums.Perfil;
 
 import lombok.AllArgsConstructor;
@@ -23,21 +23,18 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "alunos")
-public class Aluno extends Pessoa {
+@Table(name = "professor")
+public class Professor extends Pessoa {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToMany(mappedBy = "alunos")
+	@OneToMany(mappedBy = "professor")
 	@JsonIgnore
 	private Set<Disciplina> disciplinas;
-	
-//	@OneToMany(mappedBy = "aluno")
-//	private Set<Nota> notas;
  
-	public Aluno(AlunoDTO objDto) {
+	public Professor(ProfessorDTO objDto) {
 		this.id = objDto.getId();
 		this.nome = objDto.getNome();
 		this.idade = objDto.getIdade();
@@ -52,7 +49,7 @@ public class Aluno extends Pessoa {
 		
 		this.disciplinas = objDto.getDisciplinas();
 		this.perfis = objDto.getPerfis();
-		addPerfil(Perfil.ALUNO);
+		addPerfil(Perfil.PROFESSOR);
 	}
 
 }

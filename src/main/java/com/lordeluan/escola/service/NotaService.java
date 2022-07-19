@@ -36,6 +36,9 @@ public class NotaService {
 	public List<NotaDTO> findAll() {
 		List<Nota> listNota = repository.findAll();
 		List<NotaDTO> listDTO = listNota.stream().map(x -> new NotaDTO(x)).collect(Collectors.toList());
+		for (NotaDTO notaDTO : listDTO) {
+			notaDTO.getDisciplinaDTO();
+		}
 		return listDTO;
 	}
 
