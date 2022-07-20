@@ -21,6 +21,7 @@ import com.lordeluan.escola.dto.MatricularAluno;
 import com.lordeluan.escola.entity.Disciplina;
 import com.lordeluan.escola.service.DisciplinaService;
 
+import javassist.NotFoundException;
 
 @RestController
 @RequestMapping(value = "/disciplinas")
@@ -28,42 +29,47 @@ public class DisciplinaResource {
 
 	@Autowired
 	private DisciplinaService service;
-	
+
 	@GetMapping
-	public ResponseEntity<List<DisciplinaDTO>> findAll(){
+	public ResponseEntity<List<DisciplinaDTO>> findAll() {
 		List<DisciplinaDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
-	
+
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<DisciplinaDTO> findById(@PathVariable Long id) throws Exception{
+	public ResponseEntity<DisciplinaDTO> findById(@PathVariable Long id) throws Exception {
 		Disciplina obj = service.findById(id);
 		return ResponseEntity.ok().body(new DisciplinaDTO(obj));
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Disciplina> create(@Validated @RequestBody DisciplinaDTO cliDTO){
-		DisciplinaDTO clienteDTO = service.create(cliDTO);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(clienteDTO.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+	public ResponseEntity<Disciplina> create(@Validated @RequestBody DisciplinaDTO cliDTO) throws NotFoundException {
+		try {
+			DisciplinaDTO clienteDTO = service.create(cliDTO);
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(clienteDTO.getId())
+					.toUri();
+			return ResponseEntity.created(uri).build();
+		} catch (Exception e) {
+			throw new NotFoundException("Objeto não entrado");
+		}
 	}
-	
+
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<DisciplinaDTO> update(@PathVariable Long id, @Validated @RequestBody DisciplinaDTO cliDTO) throws Exception{
+	public ResponseEntity<DisciplinaDTO> update(@PathVariable Long id, @Validated @RequestBody DisciplinaDTO cliDTO)
+			throws Exception {
 		Disciplina obj = service.update(id, cliDTO);
 		return ResponseEntity.ok().body(new DisciplinaDTO(obj));
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<DisciplinaDTO> delete(@PathVariable Long id){
+	public ResponseEntity<DisciplinaDTO> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@PostMapping(path = "/matricular")
-	public void matricular(@RequestBody MatricularAluno cliDTO){
+	public void matricular(@RequestBody MatricularAluno cliDTO) {
 		service.matricularAluno(cliDTO);
 	}
-	
-	
+
 }

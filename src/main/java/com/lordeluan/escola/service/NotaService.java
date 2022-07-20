@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lordeluan.escola.dto.AlunoDTO;
+import com.lordeluan.escola.dto.DisciplinaDTO;
 import com.lordeluan.escola.dto.NotaDTO;
 import com.lordeluan.escola.entity.Aluno;
 import com.lordeluan.escola.entity.Disciplina;
@@ -15,6 +17,8 @@ import com.lordeluan.escola.entity.Nota;
 import com.lordeluan.escola.repository.AlunoRepository;
 import com.lordeluan.escola.repository.DisciplinaRepository;
 import com.lordeluan.escola.repository.NotaRepository;
+
+import javassist.NotFoundException;
 
 @Service
 public class NotaService {
@@ -42,10 +46,29 @@ public class NotaService {
 		return listDTO;
 	}
 
-	public Nota create(NotaDTO objDto) {
-		Nota alu = new Nota(objDto);
-		alu.setId(null);
-		return repository.save(alu);
+	public Nota create(NotaDTO objDto) throws NotFoundException {
+		Optional<Aluno> alu = alunoRepository.findById(objDto.getAlunoDTO().getId());
+		Optional<Disciplina> disc = discRepository.findById(objDto.getDisciplinaDTO().getId());
+
+		if (alu.isPresent() && disc.isPresent()) {
+			for (Disciplina di : alu.get().getDisciplinas()) {
+
+				if (di.getId() == disc.get().getId()) {
+					objDto.setId(null);
+					objDto.setAlunoDTO(new AlunoDTO(alu.get()));
+					objDto.setDisciplinaDTO(new DisciplinaDTO(disc.get()));
+					Nota nota = new Nota(objDto);
+					return repository.save(nota);
+
+				} else {
+					throw new NotFoundException(
+							"Disciplina não encontrada nas disciplinas que o Aluno está matriculado!");
+				}
+			}
+		}
+		throw new NotFoundException("Objetos informados não localizados! AlunoID: " + objDto.getAlunoDTO().getId()
+				+ " DisciplinaID: " + objDto.getDisciplinaDTO().getId());
+
 	}
 
 	public Nota update(Long id, NotaDTO objDto) throws Exception {

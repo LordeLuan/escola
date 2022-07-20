@@ -21,6 +21,8 @@ import com.lordeluan.escola.dto.NotaDTO;
 import com.lordeluan.escola.entity.Nota;
 import com.lordeluan.escola.service.NotaService;
 
+import javassist.NotFoundException;
+
 
 @RestController
 @RequestMapping(value = "/notas")
@@ -42,7 +44,7 @@ public class NotaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Nota> create(@Validated @RequestBody NotaDTO cliDTO){
+	public ResponseEntity<Nota> create(@Validated @RequestBody NotaDTO cliDTO) throws NotFoundException{
 		Nota cliente = service.create(cliDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId()).toUri();
 		return ResponseEntity.created(uri).build();

@@ -11,8 +11,10 @@ import com.lordeluan.escola.dto.DisciplinaDTO;
 import com.lordeluan.escola.dto.MatricularAluno;
 import com.lordeluan.escola.entity.Aluno;
 import com.lordeluan.escola.entity.Disciplina;
+import com.lordeluan.escola.entity.Professor;
 import com.lordeluan.escola.repository.AlunoRepository;
 import com.lordeluan.escola.repository.DisciplinaRepository;
+import com.lordeluan.escola.repository.ProfessorRepository;
 
 @Service
 public class DisciplinaService {
@@ -22,6 +24,9 @@ public class DisciplinaService {
 	
 	@Autowired
 	private AlunoRepository alunoRepository;
+	
+	@Autowired
+	private ProfessorRepository professorRepository;
 	
 	public Disciplina findById(Long id) throws Exception {
 		 Optional<Disciplina> obj = repository.findById(id);
@@ -35,9 +40,13 @@ public class DisciplinaService {
 		return listDTO;
 	}
 
-	public DisciplinaDTO create(DisciplinaDTO objDto) {
+	public DisciplinaDTO create(DisciplinaDTO objDto) throws Exception {
+		
+		Optional<Professor> prof = professorRepository.findById(objDto.getProfessorDTO().getId());
+		
+		prof.orElseThrow(() -> new Exception("Professor informado não existe"));
+		
 		objDto.setId(null);
-		System.out.println(objDto.getProfessorDTO());
 		return new DisciplinaDTO(repository.save(new Disciplina(objDto)));
 	}
 

@@ -36,6 +36,7 @@ public class Disciplina {
 
 	@ManyToOne
 	@JoinColumn(name = "id_professor")
+	@JsonIgnore
 	private Professor professor;
 
 	@ManyToMany
