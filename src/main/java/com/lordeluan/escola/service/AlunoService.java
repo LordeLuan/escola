@@ -40,7 +40,7 @@ public class AlunoService {
 		Aluno oldClientDto = findById(id);
 		objDto.setNome(objDto.getNome());
 		objDto.setIdade(objDto.getIdade());
-		objDto.getDisciplinas().addAll(objDto.getDisciplinas());
+//		objDto.getDisciplinas().addAll(objDto.getDisciplinas());
 		oldClientDto = new Aluno(objDto);
 		return repository.save(oldClientDto);
 	}

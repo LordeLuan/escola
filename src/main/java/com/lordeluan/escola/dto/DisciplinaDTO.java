@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.lordeluan.escola.entity.Aluno;
 import com.lordeluan.escola.entity.Disciplina;
+import com.lordeluan.escola.entity.Nota;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,12 +22,13 @@ public class DisciplinaDTO {
 	private Integer semestre;
 	private ProfessorDTO professorDTO;
 	private Set<Aluno> alunos;
+	private Set<Nota> notas;
 
 	public DisciplinaDTO(Disciplina obj) {
-		id = obj.getId();
-		nome = obj.getNome();
-		semestre = obj.getSemestre();
-		alunos = obj.getAlunos();
-		professorDTO = new ProfessorDTO(obj.getProfessor());
+		this.id = obj.getId();
+		this.nome = obj.getNome();
+		this.semestre = obj.getSemestre();
+		this.alunos = obj.getAlunos();
+		this.professorDTO = new ProfessorDTO(obj.getProfessor());
 	}
 }

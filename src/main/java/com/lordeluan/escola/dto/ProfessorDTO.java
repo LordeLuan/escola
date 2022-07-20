@@ -34,19 +34,19 @@ public class ProfessorDTO {
 	protected Set<Integer> perfis = new HashSet<>();
 
 	public ProfessorDTO(Professor obj) {
-		id = obj.getId();
-		nome = obj.getNome();
-		idade = obj.getIdade();
-		cpf = obj.getCpf();
-		cep = obj.getCep();
-		bairro = obj.getBairro();
-		logradouro = obj.getLogradouro();
-		cidade = obj.getCidade();
-		email = obj.getEmail();
-		usuario = obj.getUsuario();
-		senha = obj.getSenha();
-		perfis = obj.getPerfis().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
-		disciplinas = obj.getDisciplinas();
+		this.id = obj.getId();
+		this.nome = obj.getNome();
+		this.idade = obj.getIdade();
+		this.cpf = obj.getCpf();
+		this.cep = obj.getCep();
+		this.bairro = obj.getBairro();
+		this.logradouro = obj.getLogradouro();
+		this.cidade = obj.getCidade();
+		this.email = obj.getEmail();
+		this.usuario = obj.getUsuario();
+		this.senha = obj.getSenha();
+		this.perfis = obj.getPerfis().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
+//		this.disciplinas = obj.getDisciplinas();
 	}
 
 }

@@ -37,7 +37,7 @@ public class DisciplinaService {
 
 	public DisciplinaDTO create(DisciplinaDTO objDto) {
 		objDto.setId(null);
-
+		System.out.println(objDto.getProfessorDTO());
 		return new DisciplinaDTO(repository.save(new Disciplina(objDto)));
 	}
 

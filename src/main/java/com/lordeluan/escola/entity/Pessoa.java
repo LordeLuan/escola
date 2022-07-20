@@ -17,9 +17,9 @@ import com.lordeluan.escola.entity.enums.Perfil;
 
 import lombok.Data;
 
-@Entity
-@Table(name = "pessoa")
 @Data
+@Entity
+@Table(name = "pessoas")
 public class Pessoa {
 
 	@Id
@@ -35,18 +35,21 @@ public class Pessoa {
 	protected String email;
 	protected String usuario;
 	protected String senha;
-	
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "perfis")
 	protected Set<Integer> perfis = new HashSet<>();
-	
-	//Percorre o atributo que é uma lista de Integer, chamando o metodo toEnum para cada valor do array, converte o resultado do metodo 
-	//para uma lista tipo Set
-		public Set<Perfil> getPerfis() {
-			return perfis.stream().map(x-> Perfil.toEnum(x)).collect(Collectors.toSet());
-		}
-	// Recebe um perfil e adiciona a nossa lista de Integer o código que irá retornar do enum de acordo com o perfil passado;
-		public void addPerfil(Perfil perfil) {
-			this.perfis.add(perfil.getCodigo());
-		}
+
+	// Percorre o atributo que é uma lista de Integer, chamando o metodo toEnum para
+	// cada valor do array, converte o resultado do metodo
+	// para uma lista tipo Set
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+
+	// Recebe um perfil e adiciona a nossa lista de Integer o código que irá
+	// retornar do enum de acordo com o perfil passado;
+	public void addPerfil(Perfil perfil) {
+		this.perfis.add(perfil.getCodigo());
+	}
 }
