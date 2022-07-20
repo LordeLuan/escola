@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -30,10 +31,12 @@ public class Nota {
 	private Double valor;
 	
 	@ManyToOne
+	@JoinColumn(name = "id_aluno", nullable = false)
 	@JsonIgnore
 	private Aluno aluno;
 	
 	@ManyToOne
+	@JoinColumn(name = "id_disciplina", nullable = false)
 	@JsonIgnore
 	private Disciplina disciplina;
 	

@@ -46,7 +46,7 @@ public class ProfessorDTO {
 		this.usuario = obj.getUsuario();
 		this.senha = obj.getSenha();
 		this.perfis = obj.getPerfis().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
-//		this.disciplinas = obj.getDisciplinas();
+		this.disciplinas = obj.getDisciplinas();
 	}
 
 }

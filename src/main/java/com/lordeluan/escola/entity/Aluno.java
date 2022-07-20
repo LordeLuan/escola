@@ -35,8 +35,8 @@ public class Aluno extends Pessoa {
 	@JsonIgnore
 	private Set<Disciplina> disciplinas;
 	
-//	@OneToMany(mappedBy = "aluno")
-//	private Set<Nota> notas;
+	@OneToMany(mappedBy = "aluno")
+	private Set<Nota> notas;
  
 	public Aluno(AlunoDTO objDto) {
 		this.id = objDto.getId();
@@ -51,8 +51,9 @@ public class Aluno extends Pessoa {
 		this.usuario = objDto.getUsuario();
 		this.senha = objDto.getSenha();
 		
-//		this.disciplinas = objDto.getDisciplinas();
+		this.disciplinas = objDto.getDisciplinas();
 		this.perfis = objDto.getPerfis();
+		this.notas = objDto.getNotas();
 		addPerfil(Perfil.ALUNO);
 	}
 

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.lordeluan.escola.entity.Aluno;
 import com.lordeluan.escola.entity.Disciplina;
+import com.lordeluan.escola.entity.Nota;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,7 +31,8 @@ public class AlunoDTO {
 	private String usuario;
 	private String senha;
 
-//	private Set<Disciplina> disciplinas;
+	private Set<Nota> notas;
+	private Set<Disciplina> disciplinas;
 	protected Set<Integer> perfis = new HashSet<>();
 
 	public AlunoDTO(Aluno obj) {
@@ -46,7 +48,8 @@ public class AlunoDTO {
 		usuario = obj.getUsuario();
 		senha = obj.getSenha();
 		perfis = obj.getPerfis().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
-//		disciplinas = obj.getDisciplinas();
+		notas = obj.getNotas();
+		disciplinas = obj.getDisciplinas();
 	}
 
 }
